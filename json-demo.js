@@ -3,7 +3,7 @@ const logger = require('./logger');
 function runJsonDemo() {
   logger.info('Starting JSON logging demo...');
 
-  // Basic info with metadata
+
   logger.info('User action completed', {
     userId: 'user123',
     action: 'login',
@@ -14,7 +14,6 @@ function runJsonDemo() {
     }
   });
 
-  // Warning with structured data
   logger.warn('Resource usage high', {
     resource: 'memory',
     usage: '85%',
@@ -23,7 +22,6 @@ function runJsonDemo() {
     timestamp: new Date().toISOString()
   });
 
-  // Error with full stack trace
   try {
     throw new Error('Database connection failed');
   } catch (err) {
@@ -40,7 +38,6 @@ function runJsonDemo() {
     });
   }
 
-  // Debug with complex objects
   logger.debug('Processing request', {
     requestId: 'req-789',
     method: 'POST',

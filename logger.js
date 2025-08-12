@@ -13,7 +13,7 @@ const logger = winston.createLogger({
     json()
   ),
   transports: [
-    // Console transport with human-readable format
+
     new winston.transports.Console({
       format: combine(
         errors({ stack: true }),
@@ -26,7 +26,7 @@ const logger = winston.createLogger({
         printf((info) => `[${info.timestamp}] ${info.level}: ${info.stack || info.message}`)
       )
     }),
-    // File transport with structured JSON
+
     new winston.transports.File({
       filename: 'logs/app.log',
       format: combine(
