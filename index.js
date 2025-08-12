@@ -42,16 +42,33 @@ app.get('/error', (req, res) => {
   try {
     throw new Error('Simulated failure in /error endpoint');
   } catch (err) {
-    logger.error('[%s] Endpoint error occurred', req.requestId, err);
+    logger.error('Endpoint error occurred', {
+      requestId: req.requestId,
+      endpoint: '/error',
+      method: req.method,
+      error: err.message,
+      stack: err.stack,
+      timestamp: new Date().toISOString()
+    });
     res.status(500).json({ ok: false, message: 'An error was logged with a stack trace.' });
   }
 });
 
 app.get('/work', async (req, res) => {
   const workMs = Math.floor(Math.random() * 400) + 100; // 100-500ms
-  logger.info('[%s] Starting simulated work for %d ms', req.requestId, workMs);
+  logger.info('Starting simulated work', {
+    requestId: req.requestId,
+    endpoint: '/work',
+    durationMs: workMs,
+    timestamp: new Date().toISOString()
+  });
   await new Promise((r) => setTimeout(r, workMs));
-  logger.info('[%s] Finished simulated work', req.requestId);
+  logger.info('Finished simulated work', {
+    requestId: req.requestId,
+    endpoint: '/work',
+    actualDurationMs: workMs,
+    timestamp: new Date().toISOString()
+  });
   res.json({ ok: true, durationMs: workMs });
 });
 
